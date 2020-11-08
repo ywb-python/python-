@@ -1,0 +1,18 @@
+csv模块:读取csv文件
+csv文件:逗号分隔符文件
+读取数据
+csv.reader(scsvfile,dialect='excel',**fmtparams)
+返回一个可以按行读取的文件对象
+dialect:操作csv文件的规范，取值为excel、excel-tab和unix
+fmtparams:指明分隔符，默认为英文逗号
+
+写入数据
+csv.writer(scsvfile,dialect='excel',**fmtparams)
+
+eg:
+with open('t.csv','wb') as myFile:
+	myWriter=csv.writer(myFile)
+	myWriter.writerow([7,'h'])
+	myWriter.writerow([8,'d']) #写入一行
+	myList=[[1,2,3],['a','b','c']]
+	myWriter.writerows(myList) #写入多行

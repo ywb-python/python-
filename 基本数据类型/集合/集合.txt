@@ -1,0 +1,65 @@
+集合（set）是一个无序的不重复元素序列。
+可以使用大括号 { } 或者 set() 函数创建集合，注意：创建一个空集合必须用 set() 而不是 { }，
+因为 { } 是用来创建一个空字典。
+基本操作
+1，添加元素
+s=set()
+s.add(x)
+或
+s.update(x)
+注:x可以是单个元素，也可以是元组、列表、字典、字符串等
+2.删除元素
+s.remove(x):元素x不存在则报错
+s.discard(x):元素x不存在不报错
+s.pop():随机删除集合中的一个元素
+3.计算元素个数
+len(s)
+4.清空集合
+s.clear()
+5.判断元素是否在集合中
+x in s:
+6.复制拷贝
+s.copy()
+6.集合运算
+差集
+A.difference(B):返回集合A与集合B的差集，即包含在集合A而不包含在集合B中的元素所组成的集合
+A - B:返回集合A与集合B的差集
+A.difference_update(B):无返回值，集合A中删除了在集合B中的元素
+eg:
+a = {1, 2, 3, 4}
+b = {2, 4, 6, 8}
+print(a.difference(b)) 结果为{1, 3}
+a.difference_update(b)
+print(a) 结果为{1, 3}
+交集
+A.intersection(B):返回集合A与集合B的交集
+A & B:返回集合A与集合B的交集
+A.intersection_update(B):无返回值，集合A中只保留了在集合B中的元素
+eg:
+a = {1, 2, 3, 4}
+b = {2, 4, 6, 8}
+print(a.intersection(b)) 结果为{2, 4}
+a.intersection_update(b)
+print(a) 结果为{2, 4}
+并集
+A.union(B):返回集合A与集合B的并集
+A | B:返回集合A与集合B的交集
+eg:
+a = {1, 2, 3, 4}
+b = {2, 4, 6, 8}
+print(a.union(b)) 结果为{1, 2, 3, 4, 6, 8}
+其他运算
+A.symmetric_difference(B):返回集合A与集合B的并集he集合A与集合B交集后剩下的元素组成的集合
+A.symmetric_difference_update(B):无返回值，集合A中只保留了集合A与集合B的并集去掉集合A与集合B交集后
+剩下的元素
+a = {1, 2, 3, 4}
+b = {2, 4, 6, 8}
+print(a.symmetric_difference(b))
+a.symmetric_difference_update(b)
+print(a)
+注:1.方法名中没有"_update"的返回新集合，有"_update"的方法则在原集合上操作，无返回值
+2.运算符版本和函数版本的区别在于运算符版本只能接受集合类型的参数，而参数版本却没有该限制
+判断类
+A.isdisjoint(B):判断集合A和集合B是否包含相同的元素，如果没有则返回True,否则返回False
+A.issubset(B):判断集合A是否是集合B的子集，如果是则返回True,否则返回False
+A.issuperset(B):判断集合B是否是集合A的子集，如果是则返回True,否则返回False

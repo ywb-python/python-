@@ -1,0 +1,27 @@
+fileinput模块:遍历文本文件的所有行
+可以对一个或多个文件进行迭代、遍历等操作
+典型用法
+import fileinput
+for line in fileinput.input():
+	process(line)
+重要函数
+(1)fileinput.fileinput():返回用于for循环遍历的对象
+基本格式：
+fileinput.input([files[,inplace[,backup[,bufsize[,mode[,openhook]]]]]])
+默认格式:
+fileinput.input([files=None,inplace=False,backup="",bufsize=0,mode='r',openhook=None)
+files:文件的路径列表，默认是stdint方式，多文件为fileinput.input(['a1.txt','a2.txt']),单文件
+为fileinput.input('a1.txt')
+inplace：是否将标准输出的结果写回文件，默认不取代
+backup：备份文件的扩展名，至指定扩展名即可，如'.bak'.如果该文件的备份文件已存在，则自动覆盖
+bufsize:缓冲区大小，默认为0.如果文件很大，可以修改此参数
+mode:读写模式，默认只读
+openhook：该钩子用于控制打开的所有文件，比如编码方式等
+(2)fileinput.filename():返回当前文件的名称
+(3)fileinput.fileno():返回当前已经读取的行数或序号,多文件情形下累计
+(4)fileinput.filelineno():返回当前读取的行数或序号，无论何种情形只返回当前文件的读取的行数
+，不累计
+(5)fileinput.isfirstline():检查当前行是否是文件的第一行
+(6)fileinput.isstdin():判断最后一行是否从stdin中读取
+(7)fileinput.close():关闭队列
+(8)fileinput.isnextline():关闭当前文件并跳到下一个文件，且计数时忽略跳过的行
