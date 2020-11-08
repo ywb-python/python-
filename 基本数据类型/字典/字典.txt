@@ -1,0 +1,56 @@
+1.特点
+字典是一种可变容器类型,且可以存储任意类型对象。字典的每个键值对用冒号(:)分割,每
+个对之间用逗号(,)分割，整个字典包含在花括号中。
+2.创建与添加元素
+创建:phone_book={'张三'：138,'lisi':156}或
+phone_book['张三']=138
+phone_book['lisi']=156
+添加:phone_book['黎明']=777
+3.访问修改
+访问:phone_book['张三']
+修改:phone_book['张三']=987
+4.删除
+删除某个元素:del phone_book['张三']
+删除整个字典:del phone_book
+5.内置函数
+len(phone_book):计算字典元素个数,即键的个数
+str(phone_book):输出字典,以可打印的字符串表示
+type(phone_book):返回输入变量的类型
+6.字典内置方法
+dict.clear():清除字典内所有元素
+dict.fromkeys(seq,val):创建一个新字典，以序列seq中元素作键，val为所有键的初始值
+eg:
+a=[1,5,3]
+b=[4,7,6]
+c=dict(zip(a,b)) 结果为{1: 4, 5: 7, 3: 6}
+dict(name='mel',age=45)结果为{'name':'mel','age':45}
+dict([('name','mel'),('age',45)])结果为{'name':'mel','age':45}
+d=dict.fromkeys(a,b) 结果为{1: [4, 7, 6], 5: [4, 7, 6], 3: [4, 7, 6]}
+dict.copy():返回一个字典的浅复制
+dict.get(key,default=None):返回指定键的值,如果键不在字典中就返回default的值
+dict[key]和dict.get(key,default=None)的区别:当key不存在，前者直接报错,后者输出
+默认值
+key in dict:如果键在字典里返回True,否则返回False
+dict.items():以列表返回可遍历的元组数组(键，值)
+dict.keys():以列表返回一个字典所有的键
+dict.values():以列表返回一个字典所有的值
+dict.setdefault(key,default=None):和get()类似,但如果键不存在,将会添加键并将值设
+为default
+dict.upate(dict2):将字典dict2的键/值更新到dict里
+dict.pop(key,default):删除字典给定键key所对应的值dict[key],返回值为dict[key]，
+key必须给出。当key不在字典中时,返回default
+dict.popitem():随机返回并删除字典中的一组键值对，返回值为元组
+7.根据字典的值查询对应的键
+a={'name':'手机','price':20000}
+list(a.keys())[list(a.values()).index(20000)]
+8.字典排序
+p={"华为高":30,"中兴qd":20,"中华联想":45}
+a={'a':3,'b':1,'c':5}
+import operator
+按键排序
+item=sorted(p.items(),key=lamba x:x[0])
+a1=sorted(a.items(),key=operator.itemgetter(0))
+按值排序
+item=sorted(p.items(),key=lamba x:x[1])
+a1=sorted(a.items(),key=operator.itemgetter(1))
+
