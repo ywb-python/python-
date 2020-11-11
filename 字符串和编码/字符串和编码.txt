@@ -1,0 +1,30 @@
+1.编码方式
+ASCII编码:只能识别字母、数字等127个字符，1个字符用1个字节表示
+1B(byte,字节)=8bit(比特，二进制位)
+GB2312编码：识别中文
+GBK:GB2312的升级版,兼容GB2312只包含中文和英文
+Unicode编码:所有语言统一编码1个字符用2个字节表示
+UTF-8编码:可变长编码,英文字母用1个字节表示，汉字一般用3个字节
+j计算机系统的字符编码方式
+1.计算机内存中，统一使用Unicode编码。
+2.当需要保存到硬盘或者传输的时候，就转换为UTF-8编码
+用记事本编辑的时候，从文件读取的UTF-8字符被转换为Unicode字符到内存中，编辑完成后，保存的
+，保存的时候再把Unicode转换为UTF-8保存到文件
+浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器
+2.单字符编码
+ord(x):获取字符的整数编码(ASCII编码或者Unicode编码)
+chr():根据编码数值转换为对应字符
+3.Python的字符串
+Python的字符串是str,在内存中以Unicode表示，如果在网络上传输，就需要转换为bytes
+python中对bytes类型的数据以带b前缀的单引号或双引号表示b，如:x=b'abc'
+encode():将字符串编码为bytes
+decode():将bytes解码为字符串
+如果需要在代码中使用中文注释,必须要在python文件的最前面加上如下注释:
+# _*_ coding:UTF-8 _*_
+python3中默认的编码是Unicode,所以不需要该注释,但python2中使用中文必须加上
+如果需要使python程序运行在liunx系统中,必须要在python文件的最前面加上如下注释:
+#!/usr/bin/python
+查看IDE编码类型
+import sys
+sys.getdefaultencoding()
+

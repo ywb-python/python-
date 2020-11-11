@@ -1,0 +1,176 @@
+1.面向对象思想
+面向对象，简称OOP,是一种程序设计思想，OPP把对象作为程序的基本单元，一个对象包含
+了数据和操作数据的函数
+面向对象的基本原则就是需要一个模板(或称为一个蓝图)，在程序设计语言里，我们把这个
+对象称之为类
+类的特点:封装、继承、多态
+类的定义
+eg:
+class classname(object):
+	'类的帮助信息' #类文档字符串
+	class_suite #类体
+类的帮助信息可以通过ClassName.__doc__查看
+类名通常是大写开头的单词，紧接着是object,表示是从哪个类继承的。如果没有合适的继
+承类，就使用object类，这是所有类最终都会继承的类
+class Student(object):
+	def __init__(self, name, score):
+		self.name = name
+		self.score = score
+	def print_score(self):
+		print('%s: %s' % (self.name, self.score))
+创建实例是通过类名+()实现的。
+eg:zhangsan=Student(‘zhangsanfeng', 98)
+给实例绑定属性:zhangsan.name='张三'
+在类中，通过__init__方法给类绑定属性
+__init__方法的第一个参数永远是self，表示创建的实例本身，且调用时该参数不用传递。
+修改属性:
+zhangsan.score 结果为98
+zhangsan.score = 59
+zhangsan.score 结果为59
+要想让内部属性不被外部访问，可以在属性名称前面加上两个下划线。在python中，实例
+的变量名如果以_开头，就变成了一个私有变量。只有内部可以访问，外部无法访问
+class Student(object):
+	def __init__(self, name, score):
+		self.__name = name
+		self.__score = score
+	def print_score(self):
+		print('%s: %s' % (self.__name, self.__score))
+zhangsan=Student(‘zhangsanfeng', 98)
+此时zhangsan.__score无法访问score变量了，因为此时Python解释器把__score对外改成
+了_Student__score,所以通过zhangsan._Student__score仍然可以访问__score，但不建议
+如此做
+zhangsan.__name = '新张三疯'# 这种做法并不能改变Student内部的变量__name,该变量
+__name和Student内部的变量__name不是同一变量。而是外部代码新增的一个变量__name
+继承和多态
+当我们定义一个类时，可以从某个现有的类去继承，新的类称为子类，被继承的类称为父
+类、基类或者超类
+eg:
+class Animal:
+	def run(self):
+		print('Animal is running...')
+当我们需要编写Dog和Cat类时，就可以直接从Animal类继承：
+class Dog(Animal):
+	pass
+class Cat(Animal):
+	pass
+对于Dog来说，Animal就是它的父类，对于Animal来说，Dog就是它的子类。
+继承可以获得父类的全部功能
+dog = Dog()
+dog.run()
+cat = Cat()
+cat.run()
+子类可以增加一些方法。子类和父类都存在相同的方法时，子类的run()方法会覆盖父类的
+run()方法。这就是多态
+class Dog(Animal):
+def run(self):
+	print('Dog is running...')
+def eat(self):
+	print('Eating meat...')
+
+super关键字
+eg：
+class duoduo:
+    ve=1.2
+    def __init__(self,shencai,age):
+        self.sc=shencai
+        self.age=age
+    @staticmethod
+    def shihao():
+        print('陈瑶是学霸')
+class chenyao(duoduo):
+     def __init__(self,shencai,age,school):
+         super(chenyao,self).__init__(shencai,age)
+         self.sch=school
+     def playing_game(self):
+         print('连连看')
+     def talk(self):
+对象类型判断
+isinstance():变量类型判断函数
+eg：
+a = list() # a是list类型
+b = Animal() # b是Animal类型
+c = Dog() # c是Dog类型
+>>> isinstance(a, list)
+True
+>>> isinstance(b, Animal)
+True
+>>> isinstance(c, Dog)
+True
+>>> isinstance(c, Animal)
+True
+看来c不仅仅是Dog，c还是Animal！
+type():判断对象类型
+eg:
+>>> type(123)
+<class 'int'>
+>>> type('str')
+<class 'str'>
+>>> type(None)
+<type(None) 'NoneType'>
+如果一个变量指向函数或者类，也可以用type()判断：
+>>> type(abs)
+<class 'builtin_function_or_method'>
+>>> type(c)
+<class '__main__.Dog'>
+def bc():
+	pass
+>>> type(c)
+<class 'function'>
+类型判断用在if语句中
+>>> type(123)==type(456)
+True
+>>> type(123)==int
+True
+>>> type('abc')==type('123')
+True
+>>> type('abc')==str
+True
+>>> type('abc')==type(123)
+False
+一些特殊对象的判断,需要使用types中的常量
+import type
+>>> import types
+>>> def fn():
+... pass ...
+>>>
+type(fn)==types.FunctionType
+True
+>>> type(abs)==types.BuiltinFunctionType
+True
+>>> type(lambda x: x)==types.LambdaType
+True
+>>> type((x for x in range(10)))==types.GeneratorType
+True
+总结:对于继承关系的类要判断类型，要使用isinstance()函数，而不是type()函数
+dir():获得一个对象的所有属性和方法
+len(123)与123.__len__()是等价的
+在Python中，调用len()方法获取对象的长度时。在len()函数内部会自动调用__len__()方
+法
+hasattr(odj,'x'):判断对象是否有x属性
+setattr(odj,'x'，19):给对象设置x属性
+getattr(odj,'x'):获取对象的x属性
+getattr(odj,'x'，defaut):获取对象的x属性，如果属性x不存在，就返回默认值default
+getattr也可以获得对象的方法
+实例属性和类属性
+实例属性可通过实例或者self变量定义
+eg:
+class Student(object):
+        def __init__(self, name):
+                self.name = name
+s = Student('Bob')
+s.score = 90
+类属性只能直接在类里面定义
+eg:
+class Student(object):
+	name = 'Student'
+类属性归类所有，但所有实例都可以进行访问。由于实例属性的优先级高于类属性，所以当
+实例属性和类属性名字相同时，实例属性将屏蔽掉类属性。当同名的实例属性被删除后，再
+次用同样的名字访问，得到的是类属性
+魔法方法:双下划线包围命名的方法,比如__init__()方法
+__setattr__(self,name):设置属性时要用到的方法
+
+类的__name__的值为类名
+
+
+
+

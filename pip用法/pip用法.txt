@@ -1,0 +1,30 @@
+python内置工具
+1.启动下载服务器
+python -m http.server
+注:该命令后面也可以指定端口号:python -m http.server 8888
+执行该命令后会在当前目录下启动一个文件下载服务器,默认打开8000端口。
+使用浏览器访问python启动的下载服务器，可以看到一个类似于FTP下载的界面
+若是该目录下有index.html,则默认显示该文件的内容
+2.字符串转为JSON
+echo '{"job":"developer","name":"linux","sex":"male"}' | python3 -m json.tool
+注：该命令只能在Linux下进行
+3.检查第三方库是否安装正确
+python -c "import paramiko"
+注：此处必须是双引号，不能为单引号
+该验证方式比交互式import验证更加高效，而且可以在脚本中实现对远程服务器的验证操作
+pip高级用法
+手动安装pip: sudo apt-get install python-pip
+pip升级:pip install -U pip
+下载安装包xxx: pip download flask
+查找安装包: pip search flask
+查看安装包信息：pip show flask
+检查安装包依赖是否完整:pip check flask
+导出系统已安装的安装包列表到requirements文件：pip freeze > requirements.txt
+从requirements文件进行安装: pip install -r requirements.txt
+使用pip命令补全: pip completion --bash >>~/.profile
+source ~/.profile
+下载到本地: pip install --download='pwd' -r requirements.txt
+本地安装: pip install --no-index -f file://'pwd' -r requirements.txt
+pip wheel flask：打包软件到wheel格式
+pip hash flask：计算安装包的hash值
+
