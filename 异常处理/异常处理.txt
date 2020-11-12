@@ -1,0 +1,116 @@
+1.try...except...finally机制
+if 条件:
+语句块0
+try:
+	语句块1
+except:
+	语句块2
+else:
+	语句块3
+finally:
+	语句块4
+语句块5
+执行过程:
+1.当我们认为某段代码可能出错时，就可以将其置于try语句块(语句块1)运行。
+2.如果出错，则语句块1、else语句块(语句块3)、语句块5将不再执行，而是直接执行
+except语句块(语句块2),而后执行finally语句块(语句块4)。
+3.如果没出错，则语句块1、else语句块(语句块3)、finally语句块(语句块4)将继续执行，except语句块
+except语句块(语句块2)被跳过。
+4.无论是否出错，finally语句块(语句块4)总会执行
+5.else是与try结合，而不是if结合
+2.不同类型的错误应该由不同的except语句处理
+eg:
+try:
+	print('try...')
+	r = 10 / int('a')
+	print('result:', r)
+except ValueError as e:
+	print('ValueError:', e)
+except ZeroDivisionError as e:
+	print('ZeroDivisionError:', e)
+finally:
+	print('finally...')
+print('END')
+1.python中的所有错误类型都继承自BaseException,使用except可以捕获所有错误，下面的
+其余except的子类就无法捕获异常。
+2.如果第一个except语句未能捕获异常，会继续由下一个except语句进行异常捕获。如果
+异常没有被捕获，它就会一直往上抛，最后被Python解释器捕获，打印出错误信息，然后
+退出。
+3.此外还可跨越多层调用进行异常捕获。
+4.只有在必要的情况下才定义自己的错误类型。如果可以选择Python已有的内置错误类型
+尽量使用Python内置的错误类型
+3.raise语句
+eg：
+try:
+	10 / 0
+except ZeroDivisionError:
+	raise ValueError('input error!')
+捕获异常后可通过raise语句将错误抛出。捕获异常只是为了记录并追踪错误，无法处理错
+误。所以需要raise语句抛出错误让顶层调用者去处理错误
+raise语句如果不带参数，会将错误原样抛出；否则会将错误转化为参数表示的错误抛出
+如在上例中，会将ZeroDivisionError转换为'input error!'并抛出'input error!'
+4.断言
+程序调试的方法:
+1.print()
+程序调试时可以用print()语句进行打印，但过多的print语句删除麻烦，而且输出结果包
+含很多垃圾信息
+2.assert
+凡是print()语句的地方，都可以使用assert代替
+eg:
+n = int(s)
+assert n != 0, 'n is zero!'
+return 10 / n
+如果断言失败，assert语句会抛出AssertionError
+Python解释器可以用-O参数来关闭assert:python -O test.py
+3.logging日志
+和assert相比，logging不会抛出错误，只会输出到文件
+eg1:简单的将日志打印到屏幕
+import logging
+logging.basicConfig(level=logging.DEBUG,
+format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+datefmt='%a, %d %b %Y %H:%M:%S',filename='myapp.log',
+filemode='w')
+logging.debug('This is debug message')
+logging.info('This is info message')
+logging.warning('This is warning message')
+注:
+1.logging.basicConfig()函数各参数说明
+filename:指定日志文件名
+filemode:指定文件的打开模块，是'a'还是'w'
+format:
+	%(levelno)s:打印日志级别的数值
+	%(levelname)s:打印日志级别名称
+	%(pathname)s：打印当前执行程序的路径，其实就是sys.argv[0]
+	%(filename)s:打印当前执行程序名
+	%(funcName)s:打印当前执行函数
+	%(lineno)d：打印当前日志打印行号
+	%(asctime)s：打印日志的时间
+	%(thread)d：打印线程ID
+	%(threadName)s:打印线程名称
+	%(process)d：打印进程ID
+	%(message)s:打印日志信息
+datefmt:指定时间格式,同time.strftime()
+level:设定日志级别，默认为logging.DEBUG
+日志级别的大小为:CRITICAL>ERROR>WARNING>INFO>DEBUG>NOTEST
+CRITICAL:非常糟糕的事情，比如内存耗尽、磁盘为空等，很少使用
+ERROR:发生错误时，如IO操作失败或连接问题
+WARNING：处理请求或状态变化等日常事务
+DEBUG:调试过程中使用DEBUG级别，如算法中每个循环的中间状态
+低于指定级别的日志信息不会被输出
+stream：指定日志的输出流，就可以指定输出到sys.stderr、sys.stdout或者文件，默认
+输出到sys.stderr，当stream和filename同时指定时，stream将被忽略
+4.pdb
+启动Python的调试器pdb进行调试
+方法1：
+Python -m pdb test.py
+启动后,输入l来查看代码，输入n来单步执行代码，输入'p 变量名'来查看变量，输入q来
+结束测试，输入c运行代码
+方法2：
+导入pdb。在可能出错的地方设置pdb.set_trace()语句
+eg：
+import pdb
+s = '0'
+n = int(s)
+pdb.set_trace()
+print(10 / n)
+运行代码时程序会自动在pdb.set_trace()处暂停并进入pdb环境，

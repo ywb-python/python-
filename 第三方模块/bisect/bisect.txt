@@ -1,0 +1,11 @@
+bisect模块:实现二分查找
+bisect.bisect_left(a,x, lo=0, hi=len(a)):返回一个位置，该位置左侧值都小于x，该位置右侧值都大于等于x
+bisect.bisect_right(a,x, lo=0, hi=len(a)):返回一个位置，该位置左侧值都小于等于x，该位置右侧值都大于x
+bisect.bisect(a,x, lo=0, hi=len(a)):与bisect.bisect_right()等价
+
+bisect.insort_left(a,x, lo=0, hi=len(a)):相当于a.insert(bisect.bisect_left(a,x, lo=0,
+hi=len(a)),x)若x存在，则在其左侧插入
+bisect.insort_right(a,x, lo=0, hi=len(a)):若x存在，则在其右侧插入
+bisect.insort(a,x, lo=0, hi=len(a)):与bisect.insort_right()等价
+
+bisect.bisect系列用于查找，bisect.insort系列用于插入数值。

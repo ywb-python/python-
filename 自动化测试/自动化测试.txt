@@ -1,0 +1,265 @@
+软件测试的分类
+1.根据项目流程阶段划分为单元测试、集成测试、系统测试、验收测试
+2.根据软件结构与算法的角度分为白盒测试、黑盒测试和灰盒测试
+3.根据软件的不同测试面可分为功能测试与性能测试
+4.根据软件的自动化程度分为手工测试与自动化测试
+5.在软件周期中使用的测试:冒烟测试、回归测试、随机测试、探索性测试与安全性测试
+
+"V模型软件开发流程"：
+需求分析、概要设计、详细设计、编码、单元测试、集成测试、系统测试、验收测试
+
+编写第一个自动化测试脚本
+#coding = utf-8
+#导入selenium的webdriver包，只有导入webdriver包，才能使用webdriver API 进行自动化脚本开发。
+from selenium import webdriver
+#把webdriver的chrome对象复制给变量browser。
+browser = webdriver.Chrome()
+#获得浏览器对象,通过get()方法向浏览器发送网址。
+browser.get("http://www.baidu.com")
+#通过元素的id=kw,定位到百度的输入框，并通过键盘输入方法send_keys()向百度输入框里输入”selenium”
+browser.find_element_by_id("kw").send_keys("selenium")
+#通过百度页面的按钮元素id=su定位“百度一下”搜索按钮，并向搜索按钮发送单击事件click()
+browser.find_element_by_id("su").click()
+#关闭浏览器并退出驱动程序
+browser.quit()
+
+webdriver元素定位
+find_element_by_id()
+find_element_by_name()
+find_element_by_class_name()
+find_element_by_tag_name()
+find_element_by_link_text()
+find_element_by_partial_text()
+find_element_by_xpath()
+find_element_by_css_selector()
+
+
+css语法
+
+webdriver关于浏览器常用接口方法:
+maxmize-window():浏览器最大化
+set_window_size():设置浏览器的宽和高
+back():控制浏览器的后退
+forward():控制浏览器的前进
+refresh():控制浏览器的刷新
+
+weElement的常用接口方法:
+clear:清除元素内容
+send_keys():在元素上模拟按键输入
+click:点击元素
+submit:提交表单
+size:返回元素的尺寸
+text:获取元素的文本
+get_attribute(属性名):获得属性值
+is_displayed():设置该元素用户是否可见
+
+ActionChains类鼠标操作方法:
+perform():执行所有ActionChains中存储的行为
+context_click():右击
+double_click():双击
+drag_and_drop():拖动
+move_to_element():鼠标悬停在一个元素上
+click_and_hold():按下鼠标左键在一个元素上
+eg:
+#引入ActionChains类
+from selenium.webdriver import ActionChains
+....
+#定位到要右击的元素
+right =driver.find_element_by_xpath("xx")
+#对定位到的元素执行鼠标右键操作
+ActionChains(driver).context_click(right).perform()
+....
+keys键盘类常用方法
+send_keys(KEYS.BACK_SPACE):删除键
+send_keys(KEYS.SPACE):空格键
+send_keys(KEYS.TAB):TAB键
+send_keys(KEYS.ENTER):回车键
+send_keys(KEYS.CONTROL,"a"):全选
+send_keys(KEYS.CONTROL,"c"):复制
+send_keys(KEYS.CONTROL,"v"):粘贴
+send_keys(KEYS.CONTROL,"x"):剪切
+
+eg:
+...
+#输入框输入内容
+driver.find_element_by_id("kw1").send_keys("seleniumm")
+time.sleep(3)
+
+#删除多输入的一个m
+driver.find_element_by_id("kw1").send_keys(Keys.BACK_SPACE)
+time.sleep(3)
+...
+
+打印信息
+title:返回当前页面的标题
+current_url:返回当前加载页面的URL.
+text:获取元素的文本信息
+page_source:获取对象的源代码
+eg:
+title = driver.title
+print title
+
+#获得前面URL，打印
+now_url = driver.current_url
+print now_url
+
+#获得登录成功的用户，打印
+now_user=driver.find_element_by_id("spnUid").text
+print now_user
+
+JS对话框
+1.警告消息框alert
+2.确认消息框confirm
+3.提示消息对话prompt
+switch_to_alert():定位弹出对话
+text:获取对话框文本值
+accept():相当于点击"确认"
+dismiss():相当于点击"取消"
+send_keys():输入值，只用于提示消息对话
+
+select下拉框
+1.先定位下拉框，在定位具体选项
+2.使用select模块
+from selenium.webdriver.support.select import Select
+通过以下方法来定位:
+select_by_index():通过索引定位
+select_by_value():通过value值定位
+select_by_visible_text():通过文本值定位
+deselect_all():取消所有选项
+deselect_by_index():取消对应index选项
+deselect_by_value():取消对应value选项
+deselect_by_visible_text():取消对应文本选项
+first_selected_option():返回第一个选项
+all_selected_options():返回所有的选项
+frame操作
+frame表单嵌套的定位
+frame标签有frameset、frame、iframe三种，其中frameset与普通元素去区别。其余两种有区别。
+switch_to.frame():切换到frame中
+switch_to.default_content():切回主文档
+switch_to.parent_frame():从子frame切回到父frame
+多窗口操作
+current_window_handle:获取当前窗口句柄
+window_handles:获取所有窗口句柄
+文件上传
+input框
+通过send_keys()方法进行
+非input框
+通过AutoIt工具实现
+文件下载
+在Firefox下载
+fp = webdriver.FirefoxProfile()
+fp.set_preference("browser.download.folderList",2)
+fp.set_preference("browser.download.manager.showWhenStarting",False)
+fp.set_preference("browser.download.dir", os.getcwd())
+fp.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/octet-stream")
+browser = webdriver.Firefox(firefox_profile=fp)
+browser.get("http://pypi.python.org/pypi/selenium")
+browser.find_element_by_partial_link_text("selenium-2").click()
+对于Firefox，需设置Profile
+browser.download.dir:指定下载路径
+browser.download.folderList：
+fp.set_preference("browser.download.folderList",0):下载到桌面
+fp.set_preference("browser.download.folderList",1):下载到默认路径
+fp.set_preference("browser.download.folderList",2):下载到自定义路径
+browser.download.manager.showWhenStarting:下载时是否显示下载管理器
+browser.helperApps.neverAsk.saveToDisk：对所给文件类型不再弹出框进行询问
+在Chrome下载
+# -*- coding: utf-8 -*-
+from selenium import webdriver
+from time import sleep
+options = webdriver.ChromeOptions()
+prefs = {'profile.default_content_settings.popups': 0, 'download.default_directory': 'd:\\'}
+options.add_experimental_option('prefs', prefs)
+driver = webdriver.Chrome(executable_path='D:\\chromedriver.exe', chrome_options=options) driver.get('http://sahitest.com/demo/saveAs.htm') driver.find_element_by_xpath('//a[text()="testsaveas.zip"]').click()
+sleep(3)
+driver.quit()
+对于Chrome，需设置Options
+download.default_directory:设置下载路径
+profile.default_content_settings.popups：设置为0，禁止弹出窗口
+
+调用JavaScript
+excute_script():调用js方法
+控制浏览器滚动条
+#将页面滚动条拖到底部
+js="var q=document.documentElement.scrollTop=10000"
+driver.execute_script(js)
+注:这里的10000只是例子，具体尺寸需要具体衡量
+#将滚动条移动到页面的顶部
+js_="var q=document.documentElement.scrollTop=0"
+driver.execute_script(js_)
+cookie处理
+get_cookies():获取所有cookie信息
+get_cookie(name):返回特定name的cookie信息
+add_cookie(cookie_dict):添加cookie,必须有key和value
+delete_cookie(name):删除特定name的cookie信息
+delete_cookies():删除所有cookie信息
+验证码的解决方法
+去掉验证码、设置万能码、验证码识别技术、记录cookie
+窗口截图
+get_screenshot_as_file(self,filename):获取当前window的截图，出现IOError返回False.截图成功
+返回True，filename为文件路径
+get_screenshot_as_base64(self,filename):获取屏幕截图，保存为base64的编码格式，在html界面输
+出截图的时候，会用到。比如把截图放到html报告里
+get_screenshot_as_png(self):获取屏幕截图，保存为二进制格式，很少用到
+元素等待
+1.强制等待
+time.sleep(3)
+2.隐性等待
+implicitly_wait(3)
+隐性等待对整个driver的周期都起作用，只设置一次就好
+3.显性等待
+WebDriverWait()
+主要配合until()和until_not()方法
+WebDriverWait是显性等待类，
+class WebDriverWait(object):
+    def __init__(self, driver, timeout, poll_frequency=POLL_FREQUENCY,
+	ignored_exceptions=None)
+driver为webdriver的实例对象
+timeout为超时时间
+poll_frequency为调用until或until_not方法的间隔时间，默认是0.5秒
+ignored_exceptions:忽略的异常。如果在调用until或until_not方法的方法中抛出这个元组的异常，则
+不中断代码，继续等待。如果在调用until或until_not方法的方法中抛出这个元组外的异常，则中断代码
+，抛出异常。默认只有NoSuchElementException
+until
+method: 在等待期间，每隔一段时间（__init__中的poll_frequency）调用这个传入的方法，直到元素
+出现或条件成立才继续执行
+until_not
+method: 在等待期间，每隔一段时间（__init__中的poll_frequency）调用这个传入的方法，直到元素
+消失或条件不成立才继续执行
+eg：
+# -*- coding: utf-8 -*-
+from selenium import webdriver
+from selenium.webdriver.support.wait
+import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+driver = webdriver.Firefox()
+driver.implicitly_wait(10) # 隐性等待和显性等待可以同时用，但要注意：等待的最长时间取两者之中的大者
+driver.get('https://huilansame.github.io')
+locator = (By.LINK_TEXT, 'CSDN')
+try:
+	WebDriverWait(driver, 20, 0.5).until(EC.presence_of_element_located(locator))
+	print(driver.find_element_by_link_text('CSDN').get_attribute('href') )
+finally:
+	driver.close()
+
+expected_conditions
+条件判断的模块
+title is：等于
+title contain:包含
+presence_of_element_located：有一个符合条件的元素加载出来就通过
+presence_of_all_elements_located：符合条件的所有元素都加载出来才通过
+visibility_of_element_located：元素可见
+invisibility_of_element_located：元素不可见
+visibility_of：等价于visibility_of_element_located
+text_to_be_present_in_element：某文本是否出现在元素的text中
+text_to_be_present_in_element_value：某文本是否出现在元素的value中
+frame_to_be_available_and_switch_to_it：frame是否可切入
+alert_is_present：是否有alert出现
+element_to_be_clickable：元素是否可点击
+判断元素是否被选中的四种方法:
+element_to_be_selected:传入WebElement对象
+element_located_to_be_selected:传入locator元组
+element_selection_state_to_be:传入WebElement对象以及状态，相等返回True，否则返回False
+element_located_selection_state_to_be:传入locator元组以及状态，相等返回True，否则返回False
+staleness_of:断一个元素是否仍在DOM中，传入WebElement对象，就可以判断页面是否刷新了

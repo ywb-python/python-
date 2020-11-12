@@ -1,0 +1,106 @@
+1.文件打开与关闭
+方法1：
+f=open('D:\\python3.5\\11-File\\test.txt','r')
+print(f.read())
+f.close()
+方法2：
+with open('D:\\python3.5\\11-File\\test.txt','r') as f:
+	print(f.read())
+该方法打开文件操作完成后自动关闭，不需要再执行close()来关闭文件
+open(file, mode='r', buffering=None, encoding=None, errors=None, newline=None, closefd=True)
+bufeering=0代表输出无缓存，默认情况下缓存，所以写入的文本不会立即从内存转换到磁盘。
+2.文本文件读取
+read():一次性读取文件的全部内容
+read(size):每次读取最多size字节的内容
+readline():每次读取一行内容
+readlines():一次读取所有内容并按行返回list
+注:如果文件很小，read()一次性读取最方便;如果不能确定文件大小，反复调用read(size)
+比较保险;如果是配置文件，调用readlines()最方便
+3.file-like Object
+像open()函数返回的这种有个read()方法的对象，在Python中称之为file-like Object
+file-like Object不要求从特定类继承，只要写个read()方法就行
+4.二进制文件的读取
+with open('D:\\python3.5\\11-File\\test.txt','rb') as f:
+	print(f.read())
+5.字符编码
+f=open('D:\\python3.5\\11-File\\test.jpg','r',encoding='gbk')
+在遇到UnicodeDecodeError编码错误时，open()函数还会接受一个errors参数,表示遇到编
+码错误后如何处理。最简单的方式是直接忽略
+f=open('D:\\python3.5\\11-File\\test.jpg','r',encoding='gbk',errors='ignore')
+6.文件写入
+当我们写入文件时，操作系统往往不会立即将数据写入磁盘，而是放到内存中缓存起来，
+空闲的时候在慢慢写入
+with open('D:\\python3.5\\11-File\\test.txt', 'w') as f:
+	f.write('Hello, world!')
+with open('D:\\python3.5\\11-File\\test.jpg', 'wb') as f:
+	f.write('Hello, world!')
+7.StringIO和BytesIO
+StringIO:在内存中读写字符串
+要把str写入StringIO,需要先创建一个StringIO，在像写入文件一样写入
+from io import StringIO
+写入:
+f=StringIO()
+f.write("hello world")
+print(f.getvalue())
+读取:
+f=StringIO("hello world")
+print(f.read())
+f.getvalue():用于获得写入的Str
+BytesIO:在内存中读取二进制数据
+from io import BytesIO
+写入:
+f=BytesIO()
+f.write(("hello world").encode='utf-8')
+print(f.getvalue())
+读取:
+f = BytesIO(b'\xe4\xb8\xad\xe6\x96\x87')
+print(f.read())
+8.操作文件和目录
+os模块
+os.name:获取系统操作类型，其值为posix(此时系统为linux、unix或者Mac OS X)或nt(此
+时为Windows系统)
+os.environ:获取操作系统中定义的环境变量
+os.environ.get(key):获得某个环境变量的值，参数为环境变量名
+os.path.abspath(path):获取路径path的绝对路径
+os.path.join('D:\\python3.5\\11-File', 'testdir'):将参数进行路径拼接，不考虑路
+径是否真实存在有效
+os.path.split(path)：路径拆分，得到两个值，后一个值为最后的目录或文件名
+os.path.splitext(path)：路径拆分，得到两个值，后一个值为文件扩展名
+os.path.join()、os.path.split()、os.path.splitext()不要求路径真实存在，他们只对
+字符串进行操作
+os.mkdir(path):创建path目录.若已存在该目录则会报错
+os.rmdir(path):创建path 目录.若不存在该目录则会报错
+os.rename(old,new):对文件重命名，将old重命名为new
+os.remove(文件名):删除文件
+shutil模块
+9.序列化和反序列化
+序列化:把变量从内存中变成可存储或可传输的过程，在Python中叫packing
+反序列化:变量内容从序列化的对象重新读进内存的过程，在Python中叫unpacking：
+pickle模块:Python中实现序列化的模块，只适合在Python内部使用，是对象与bytes之间的相互转化
+pickle.dumps():把任意对象序列化成bytes
+pickle.dump():把任意对象序列化成bytes并把这个bytes写入磁盘
+pickle.loads():把bytes反序列化成对象
+pickle.load():从磁盘读出bytes，再把bytes反序列化成对象
+json模块:Python中实现序列化的模块，可以在不同语言之间进行传递对象，是对象与字符串之间的相互转化
+pickle.dumps():把任意对象序列化成字符串
+pickle.dump():把任意对象序列化成字符串并把这个字符串写入磁盘
+pickle.loads():把字符串反序列化成对象
+pickle.load():从磁盘读出字符串，再把字符串反序列化成对象
+json数据类型和Python数据类型的对应关系
+json类型       –>    Python类型
+   {}          –>     dict
+   []          –>     list
+'string'       –>   str
+ 123,7.8       –>     int,float
+ true,false8   –>     True,False
+ null          –>    None
+python中类的实例需要转换为z字典dict才可以进行json转化
+eg:
+import json
+class Student(object):
+	def __init__(self, name, age, score):
+		self.name = name
+		self.age = age
+		self.score = score
+s = Student('Bob', 20, 88)
+print(json.dumps(s,default=lambda obj:obj.__dict__))

@@ -1,0 +1,10 @@
+import random
+random.random():随机产生(0,1)之间的随机数
+random.ranint(a,b):随机生成指定范围[a,b]内的整数
+random.randrange(a,b):随机生成指定范围[a,b)内的整数
+random.randrange(a,b,c):随机生成指定范围[a,b)内的指定步长为c的整数
+random.choice("hello"):随机生成指定字符串中的元素
+random.choice([1,2,3,4]):随机生成指定列表中的元素
+random.choice(('abc',123,'hello)):随机生成指定元组中的元素
+random.sample("hello",3):随机生成指定序列中指定个数的元素
+random.uniform(a,b):随机生成指定范围内的浮点数

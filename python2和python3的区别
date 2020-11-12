@@ -1,0 +1,91 @@
+1.print
+在python2中print被视为语句,在python3中print被视为函数
+当然在Python2中也可以将输出的文本放在括号里面，但并无必要
+eg:
+print 'hello world' #python2
+print('hello world') #python3
+
+2.input
+在Python2中，input()得到的用户输入为int型，raw_input()得到的为str类型
+python3中无raw_input()，input()得到的用户输入为str型
+
+3.除法
+eg：3/2的结果在python2中为1，在python3中为1.5
+若要在python2希望得到1.5，必须用3.0/2.0
+//、%含义在python2和python3中一致
+
+4.Unicode字符串
+默认情况下，python3是将字符串存储为Unicode，python2是将字符串存储为ASCII码，而如果Python2要将字符串存储为Unicode,则要求使用"u"标记字符串。如果要确保python2与python3兼容，仍然可以在python3中使用"u"来标记Unicode字符串
+版本
+Python2
+Python3
+字节字符串
+Str
+bytes
+文本字符串
+Unicode
+str
+
+
+5.列表理解循环变量
+在python2中，在列表推导中迭代的变量与全局变量名称相同时有可能导致全局变量的值被修改。
+python3中无此问题
+
+6.错误处理
+在python3中，as关键字是必须的
+eg：
+python2的情形
+try:
+	tring_to_check_error
+except NameError,err:
+	print err,'Error Caused'
+	raise IOError, 'file error'
+
+python3的情形
+try:
+	tring_to_check_error
+except NameError as err:
+	raise IOError('file error')
+	print(err,'Error Caused')
+
+7. xrange
+在python2中,range()返回一个列表,xrange返回一个xrange迭代器对象
+在python3中，range返回一个range迭代器对象，无xrange
+
+8.import
+python3采用绝对路径的方式进行import,而Python2是相对路径导入
+
+9.open()
+在python2中，打开文件既可以用open()，也可以用file()
+在python3中，只能使用open()
+
+10.类
+python2存在新式类和经典类的区别，python3统一用新式类
+经典类和新式类的别:
+新式类都是从object继承，经典类不需要
+新式类的MRO(基类搜索顺序)为广度优先，经典类为深度优先
+
+11.缩进方式
+Python2中1个tab和8个space是等价的,在缩进中tab和space可以混用
+在python3中不允许二者混用
+
+12.运算符
+python2中的'<>'被移除，python3一律用'!='
+python2中的long型被移除，python3一律用int
+python2中字典的has_key()被移除，python3一律用in
+python2中异常StandardError被移除，python3一律用Exception
+
+13. python3中这些方法不再返回list对象
+dict.keys(),dict.values(),dict.items(),zip(),map(),filter()
+
+14.迭代器
+python2中的iterator.next()被移除，python3一律用next(iterator)
+
+15.工具差异
+Python2无法安装mysqlclient，python3无法安装mysql-python
+
+16.编码
+Python2使用ASCII编码，Python3使用utf-8编码
+
+17.中文
+Python2需引入coding声明，Python3不需要
